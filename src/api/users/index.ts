@@ -1,14 +1,18 @@
+import z from 'zod';
 import { api } from '..'
-import type User from '../../types/User';
+import type { User } from '../../types/User';
+import { UserSchema } from '../../types/User';
 
 export const userServices = {
   list: async (): Promise<User[]> => {
     const response = await api.get('/users');
-    return response.data.recipes
+    const users = z.array(UserSchema).parse(response.data.users)
+    return users
   },
 
   getUserById: async (id: string): Promise<User> => {
     const response = await api.get(`/users/${id}`)
-    return response.data;
+    const user = UserSchema.parse(response.data);
+    return user;
   },
 }

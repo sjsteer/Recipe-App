@@ -1,18 +1,22 @@
-export default interface Recipe {
-  id: string,
-  name: string,
-  ingredients: string[],
-  instructions: string[],
-  prepTimeMinutes: number,
-  cookTimeMinutes: number,
-  servings: number,
-  difficulty: string,
-  cuisine: string,
-  caloriesPerServing: number,
-  tags: string[],
-  userId: string,
-  image: string,
-  rating: number,
-  reviewCount: number,
-  mealType: string[],
-}
+import z from "zod";
+
+export const RecipeSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  ingredients: z.array(z.string()),
+  instructions: z.array(z.string()),
+  prepTimeMinutes: z.number(),
+  cookTimeMinutes: z.number(),
+  servings: z.number(),
+  difficulty: z.string(),
+  cuisine: z.string(),
+  caloriesPerServing: z.number(),
+  tags: z.array(z.string()),
+  userId: z.number(),
+  image: z.string(),
+  rating: z.number(),
+  reviewCount: z.number(),
+  mealType: z.array(z.string()),
+})
+
+export type Recipe = z.infer<typeof RecipeSchema>;
